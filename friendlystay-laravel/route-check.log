@@ -1,0 +1,8 @@
+
+  GET|HEAD  api/admin/properties ................................................... Api\PropertyController@adminIndex
+  POST      api/admin/properties ........................................................ Api\PropertyController@store
+  PUT       api/admin/properties/{id} .................................................. Api\PropertyController@update
+  POST      api/admin/properties/{id}/document ................................. Api\PropertyController@uploadDocument
+
+                                                                                                    Showing [4] routes
+

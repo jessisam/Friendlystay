@@ -1,0 +1,22 @@
+# React
+friendlystay-react/node_modules/
+friendlystay-react/dist/
+friendlystay-react/.env.local
+
+# Laravel
+friendlystay-laravel/vendor/
+friendlystay-laravel/.env
+friendlystay-laravel/storage/logs/
+
+# Logs
+*.log
+*.log.*
+*-error.log
+*-dev.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ignore old backend
+friendlystay-backend/
