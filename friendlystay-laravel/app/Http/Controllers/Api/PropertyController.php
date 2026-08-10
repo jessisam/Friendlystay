@@ -19,9 +19,10 @@ class PropertyController extends Controller
                 'properties' => $properties
             ]);
         } catch (\Exception $e) {
+            logger()->error('PropertyController index Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while fetching properties.'
             ], 500);
         }
     }
@@ -54,9 +55,10 @@ class PropertyController extends Controller
                 'property' => $property
             ], 201);
         } catch (\Exception $e) {
+            logger()->error('PropertyController store Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while creating property.'
             ], 500);
         }
     }
@@ -83,9 +85,10 @@ class PropertyController extends Controller
                 'message' => 'Property updated'
             ]);
         } catch (\Exception $e) {
+            logger()->error('PropertyController update Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while updating property.'
             ], 500);
         }
     }
@@ -120,9 +123,10 @@ class PropertyController extends Controller
                 'document_url' => $url
             ]);
         } catch (\Exception $e) {
+            logger()->error('PropertyController uploadDocument Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while uploading document.'
             ], 500);
         }
     }

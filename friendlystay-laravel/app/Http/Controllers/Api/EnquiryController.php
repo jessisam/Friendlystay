@@ -51,9 +51,10 @@ class EnquiryController extends Controller
                 'enquiries' => $enquiries
             ]);
         } catch (\Exception $e) {
+            logger()->error('EnquiryController adminIndex Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while fetching enquiries.'
             ], 500);
         }
     }

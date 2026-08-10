@@ -22,8 +22,10 @@ const Navbar = () => {
             <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="navbar">
                 <div className="container">
                     <Link to="/" className="nav-logo" onClick={closeMenu}>
-                        <img src="/Icon.png" alt="FriendlyStay Logo" style={{ height: '40px', width: '40px', objectFit: 'contain' }} />
-                        FriendlyStay
+                        <div className="nav-logo-circle">
+                            <img src="/Icon.png" alt="FriendlyStay Logo" />
+                        </div>
+                        <span className="nav-logo-text">Friendly<span className="text-gold">Stay</span></span>
                     </Link>
 
                     <ul className={`nav-links ${isOpen ? 'open' : ''}`} id="navLinks">

@@ -1,12 +1,18 @@
 # React
 friendlystay-react/node_modules/
 friendlystay-react/dist/
+friendlystay-react/.env
 friendlystay-react/.env.local
+friendlystay-react/.agents/
 
 # Laravel
 friendlystay-laravel/vendor/
 friendlystay-laravel/.env
 friendlystay-laravel/storage/logs/
+friendlystay-laravel/storage/framework/views/
+friendlystay-laravel/bootstrap/cache/packages.php
+friendlystay-laravel/bootstrap/cache/services.php
+friendlystay-laravel/database/database.sqlite
 
 # Logs
 *.log

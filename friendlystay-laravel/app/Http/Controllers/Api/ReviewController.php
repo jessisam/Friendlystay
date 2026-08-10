@@ -64,9 +64,10 @@ class ReviewController extends Controller
                 'reviews' => $reviews
             ]);
         } catch (\Exception $e) {
+            logger()->error('ReviewController adminIndex Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while fetching reviews.'
             ], 500);
         }
     }
@@ -83,9 +84,10 @@ class ReviewController extends Controller
                 'message' => 'Review approved'
             ]);
         } catch (\Exception $e) {
+            logger()->error('ReviewController approve Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while approving review.'
             ], 500);
         }
     }
@@ -102,9 +104,10 @@ class ReviewController extends Controller
                 'message' => 'Review rejected'
             ]);
         } catch (\Exception $e) {
+            logger()->error('ReviewController reject Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while rejecting review.'
             ], 500);
         }
     }
@@ -125,9 +128,10 @@ class ReviewController extends Controller
                 'message' => 'Reply saved'
             ]);
         } catch (\Exception $e) {
+            logger()->error('ReviewController reply Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while saving reply.'
             ], 500);
         }
     }
@@ -144,9 +148,10 @@ class ReviewController extends Controller
                 'message' => 'Review deleted'
             ]);
         } catch (\Exception $e) {
+            logger()->error('ReviewController destroy Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while deleting review.'
             ], 500);
         }
     }

@@ -27,8 +27,8 @@ class AuthController extends Controller
             ], 401);
         }
 
-        // Generate JWT token matching legacy Node.js backend signature
-        $secret = env('JWT_SECRET', 'friendlystay_secret_key_2024');
+        // Generate JWT token matching legacy Node.js backend signature safely via config
+        $secret = config('auth.jwt_secret');
         $payload = [
             'id' => $admin->id,
             'username' => $admin->username,

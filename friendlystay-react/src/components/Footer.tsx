@@ -9,8 +9,10 @@ const Footer = () => {
                 <div className="footer-grid">
                     <div className="footer-brand">
                         <Link to="/" className="nav-logo">
-                            <img src="/Icon.png" alt="FriendlyStay Logo" style={{ height: '40px', width: '40px', objectFit: 'contain' }} />
-                            FriendlyStay
+                            <div className="nav-logo-circle">
+                                <img src="/Icon.png" alt="FriendlyStay Logo" />
+                            </div>
+                            <span className="nav-logo-text">Friendly<span className="text-gold">Stay</span></span>
                         </Link>
                         <p>
                             Your trusted homestay in Chennai. We offer premium daily and weekly rental rooms, private rooms, and 2BHK

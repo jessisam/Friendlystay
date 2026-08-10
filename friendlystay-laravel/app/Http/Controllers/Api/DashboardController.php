@@ -29,9 +29,10 @@ class DashboardController extends Controller
                 ]
             ]);
         } catch (\Exception $e) {
+            logger()->error('DashboardController Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while fetching stats.'
             ], 500);
         }
     }

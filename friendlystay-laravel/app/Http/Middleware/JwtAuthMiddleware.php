@@ -25,7 +25,7 @@ class JwtAuthMiddleware
         }
 
         $token = substr($header, 7);
-        $secret = env('JWT_SECRET', 'friendlystay_secret_key_2024');
+        $secret = config('auth.jwt_secret');
 
         try {
             $decoded = JWT::decode($token, new Key($secret, 'HS256'));

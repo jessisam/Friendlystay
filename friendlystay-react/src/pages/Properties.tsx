@@ -12,6 +12,7 @@ interface DBProperty {
     amenities: string[];
     whatsapp_link: string;
     document_url?: string;
+    images?: string[];
 }
 
 interface PropertyStatic {
@@ -68,18 +69,33 @@ const staticData: PropertyStatic[] = [
 
 const PropertyCarousel = ({ images, name }: { images: string[], name: string }) => {
     const [index, setIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+
     const next = () => setIndex((index + 1) % images.length);
     const prev = () => setIndex((index - 1 + images.length) % images.length);
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStart(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStart === null) return;
+        const touchEnd = e.changedTouches[0].clientX;
+        const diff = touchStart - touchEnd;
+        if (diff > 50) next();
+        else if (diff < -50) prev();
+        setTouchStart(null);
+    };
+
     return (
-        <div className="property-carousel">
+        <div className="property-carousel" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <div className="carousel-track" style={{ transform: `translateX(-${index * 100}%)`, display: 'flex', transition: 'transform 0.5s ease' }}>
                 {images.map((img, i) => (
                     <img key={i} src={img} alt={`${name} - Image ${i + 1}`} style={{ width: '100%', flexShrink: 0, objectFit: 'cover' }} />
                 ))}
             </div>
-            <button className="carousel-btn prev" onClick={prev}><ChevronLeft /></button>
-            <button className="carousel-btn next" onClick={next}><ChevronRight /></button>
+            <button className="carousel-btn prev" onClick={prev} aria-label="Previous image"><ChevronLeft /></button>
+            <button className="carousel-btn next" onClick={next} aria-label="Next image"><ChevronRight /></button>
             <div className="carousel-dots">
                 {images.map((_, i) => (
                     <span key={i} className={`dot ${i === index ? 'active' : ''}`} onClick={() => setIndex(i)}></span>
@@ -92,6 +108,7 @@ const PropertyCarousel = ({ images, name }: { images: string[], name: string }) 
 const Properties = () => {
     const [dbProperties, setDbProperties] = useState<DBProperty[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedLocation, setSelectedLocation] = useState('All');
 
     useEffect(() => {
         fetch(`${API}/properties`)
@@ -105,6 +122,14 @@ const Properties = () => {
     const mergedProperties = staticData.map(s => {
         const db = dbProperties.find(d => d.id === s.dbId);
         return { ...s, db };
+    });
+
+    const filteredProperties = mergedProperties.filter(p => {
+        if (selectedLocation === 'All') return true;
+        const addr = (p.db?.address || '').toLowerCase();
+        const name = (p.db?.name || '').toLowerCase();
+        const loc = selectedLocation.toLowerCase();
+        return addr.includes(loc) || name.includes(loc);
     });
 
     return (
@@ -123,13 +148,26 @@ const Properties = () => {
 
             <section className="section">
                 <div className="container">
+                    <div className="location-filter-tabs" style={{ display: 'flex', justifyContent: 'center', gap: '0.8rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+                        {['All', 'Mugilivakkam', 'Kolapakkam', 'Prime'].map(loc => (
+                            <button
+                                key={loc}
+                                className={`btn btn-sm ${selectedLocation === loc ? 'btn-primary' : 'btn-outline'}`}
+                                onClick={() => setSelectedLocation(loc)}
+                                style={{ borderRadius: 'var(--radius-xl)', padding: '0.5rem 1.2rem', fontWeight: 600 }}
+                            >
+                                {loc === 'All' ? '🏢 All Locations' : `📍 ${loc}`}
+                            </button>
+                        ))}
+                    </div>
+
                     {loading ? (
                         <p style={{ textAlign: 'center', color: 'var(--clr-text-muted)', padding: '2rem' }}>Loading properties...</p>
                     ) : (
                         <div className="enquiry-grid">
-                            {mergedProperties.map(property => (
+                            {filteredProperties.map(property => (
                                 <div key={property.dbId} className="enquiry-card">
-                                    <PropertyCarousel images={property.images} name={property.db?.name || ''} />
+                                    <PropertyCarousel images={(property.db?.images && property.db.images.length > 0) ? property.db.images : property.images} name={property.db?.name || ''} />
                                     <div className="enquiry-card-body">
                                         <h3>{property.db?.name || ''}</h3>
                                         <div className="enquiry-card-types">
