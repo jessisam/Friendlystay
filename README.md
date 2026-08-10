@@ -10,16 +10,27 @@
 
 ---
 
-## 🖼️ Website Preview
+## 🖼️ Application Screenshots & Previews
 
-![FriendlyStay Website Preview](docs/screenshots/website_preview.jpg)
+### 📱 Full-Stack Overview & Device Preview
+![FriendlyStay Overview](docs/screenshots/website_preview.jpg)
+
+### 🏢 Property Listings, Pricing & Downloads
+![Properties Showcase](docs/screenshots/properties_showcase.jpg)
+
+### 📍 Interactive Location Maps in Chennai (Mugilivakkam, Kolapakkam & Valasaravakkam)
+![Find Us in Chennai Locations Map](docs/screenshots/locations_map.jpg)
+
+### ✨ Features & Amenities Showcase
+![Why Choose FriendlyStay Amenities](docs/screenshots/about_amenities.jpg)
 
 ---
 
-## ✨ Features & Highlights
+## ✨ Key Features & Highlights
 
 ### 🌐 Frontend (Guest Portal)
 * **Luxury Design System**: Navy (`#0C447C`) & Warm Gold (`#EF9F27`) aesthetic with frosted glassmorphism (`backdrop-filter: blur`).
+* **Circular Logo**: Styled circular branding frame with gold border accents and dynamic hover rotation.
 * **Responsive Layouts**: Fixed navbar, mobile drawer menu, zero floating-button collision, and optimized touch swipe carousels.
 * **Interactive Property Listings**:
   * Multi-photo swipeable carousels.
@@ -99,8 +110,11 @@
 Friendlystay/
 ├── docker-compose.yml             # Unified Docker Compose configuration
 ├── docs/
-│   └── screenshots/               # Website preview screenshots
-│       └── website_preview.jpg
+│   └── screenshots/               # Application screenshots
+│       ├── website_preview.jpg
+│       ├── properties_showcase.jpg
+│       ├── locations_map.jpg
+│       └── about_amenities.jpg
 ├── friendlystay-react/            # React 19 Frontend
 │   ├── Dockerfile                 # Multi-stage Nginx Dockerfile
 │   ├── nginx.conf                 # SPA routing configuration
