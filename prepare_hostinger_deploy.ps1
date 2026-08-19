@@ -64,6 +64,16 @@ QUEUE_CONNECTION=sync
 SESSION_DRIVER=file
 SESSION_LIFETIME=120
 
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=friendlystay1@gmail.com
+MAIL_PASSWORD=srysazzyzojmebhh
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="friendlystay1@gmail.com"
+MAIL_FROM_NAME="FriendlyStay Homestay"
+MAIL_TO_ADDRESS="friendlystay1@gmail.com"
+
 JWT_SECRET=friendlystay_secure_jwt_token_2026_hostinger
 "@
 Set-Content -Path "$deployDir\api\.env" -Value $laravelEnv -Encoding UTF8
