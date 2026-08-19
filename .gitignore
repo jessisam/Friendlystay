@@ -20,6 +20,10 @@ friendlystay-laravel/database/database.sqlite
 *-error.log
 *-dev.log
 
+# Hostinger Packaging
+hostinger_deploy/
+hostinger_public_html.zip
+
 # OS
 .DS_Store
 Thumbs.db

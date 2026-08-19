@@ -48,5 +48,6 @@ Route::middleware(\App\Http\Middleware\JwtAuthMiddleware::class)->prefix('admin'
     Route::post('/properties/{id}/document', [PropertyController::class, 'uploadDocument']);
 
     Route::get('/enquiries', [EnquiryController::class, 'adminIndex']);
+    Route::delete('/enquiries/{id}', [EnquiryController::class, 'destroy']);
     Route::get('/enquiries/export', [EnquiryController::class, 'exportCsv']);
 });

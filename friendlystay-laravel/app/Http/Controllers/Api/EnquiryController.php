@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\EnquiryReceivedMail;
+use App\Mail\GuestConfirmationMail;
 use App\Models\Enquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -23,11 +24,19 @@ class EnquiryController extends Controller
         try {
             $enquiry = Enquiry::create($validated);
 
-            // Send email notification - fail safe
+            // Send Admin Notification Email
             try {
-                Mail::to('appy49824@gmail.com')->send(new EnquiryReceivedMail($enquiry));
+                $adminEmail = env('MAIL_TO_ADDRESS', 'appy49824@gmail.com');
+                Mail::to($adminEmail)->send(new EnquiryReceivedMail($enquiry));
             } catch (\Exception $mailErr) {
-                logger()->error('Mail sending failed: ' . $mailErr->getMessage());
+                logger()->error('Admin mail sending failed: ' . $mailErr->getMessage());
+            }
+
+            // Send Guest Confirmation Auto-Reply Email
+            try {
+                Mail::to($enquiry->email)->send(new GuestConfirmationMail($enquiry));
+            } catch (\Exception $guestMailErr) {
+                logger()->error('Guest mail sending failed: ' . $guestMailErr->getMessage());
             }
 
             return response()->json([
@@ -45,7 +54,7 @@ class EnquiryController extends Controller
     public function adminIndex()
     {
         try {
-            $enquiries = Enquiry::orderBy('created_at', 'desc')->limit(20)->get();
+            $enquiries = Enquiry::orderBy('created_at', 'desc')->get();
             return response()->json([
                 'success' => true,
                 'enquiries' => $enquiries
@@ -55,6 +64,23 @@ class EnquiryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => config('app.debug') ? $e->getMessage() : 'An error occurred while fetching enquiries.'
+            ], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $enquiry = Enquiry::findOrFail($id);
+            $enquiry->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Enquiry deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete enquiry'
             ], 500);
         }
     }

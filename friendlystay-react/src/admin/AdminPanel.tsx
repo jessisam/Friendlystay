@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import AdminLogin from './AdminLogin';
 import AdminDashboard from './AdminDashboard';
+import AdminEnquiries from './AdminEnquiries';
 import AdminReviews from './AdminReviews';
 import AdminProperties from './AdminProperties';
 
 import { API_BASE_URL as API } from '../config/api';
 
-type Page = 'dashboard' | 'reviews' | 'properties';
+type Page = 'dashboard' | 'enquiries' | 'reviews' | 'properties';
 
 const AdminPanel = () => {
     const [token, setToken] = useState<string | null>(localStorage.getItem('admin_token'));
@@ -40,6 +41,7 @@ const AdminPanel = () => {
 
     const navItems: { key: Page; label: string; icon: string }[] = [
         { key: 'dashboard', label: 'Dashboard', icon: '📊' },
+        { key: 'enquiries', label: 'Enquiries', icon: '📩' },
         { key: 'reviews', label: 'Reviews', icon: '⭐' },
         { key: 'properties', label: 'Properties', icon: '🏠' },
     ];
@@ -87,7 +89,7 @@ const AdminPanel = () => {
                         color: 'white', display: 'flex', alignItems: 'center', gap: '0.75rem',
                         cursor: 'pointer', fontSize: '0.95rem', marginBottom: '0.25rem', textAlign: 'left'
                     }}>
-                        <span>📥</span> Export Enquiries
+                        <span>📥</span> Export CSV
                     </button>
                 </nav>
 
@@ -103,6 +105,7 @@ const AdminPanel = () => {
             {/* Main Content */}
             <div style={{ marginLeft: '260px', flex: 1, padding: '2rem' }}>
                 {page === 'dashboard' && <AdminDashboard token={token} />}
+                {page === 'enquiries' && <AdminEnquiries token={token} />}
                 {page === 'reviews' && <AdminReviews token={token} />}
                 {page === 'properties' && <AdminProperties token={token} />}
             </div>
