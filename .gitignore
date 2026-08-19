@@ -14,6 +14,10 @@ friendlystay-laravel/bootstrap/cache/packages.php
 friendlystay-laravel/bootstrap/cache/services.php
 friendlystay-laravel/database/database.sqlite
 
+# Credentials & Sensitive Config (DO NOT PUSH)
+env_credentials.txt
+*.txt
+
 # Logs
 *.log
 *.log.*
